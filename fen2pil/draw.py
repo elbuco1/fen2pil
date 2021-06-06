@@ -1,12 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from PIL import Image, ImageDraw
+from PIL import Image
 import numpy as np
 import os
-from chess import pgn as c_pgn
 import chess
-import cv2
 
 import pathlib
 
@@ -177,9 +175,9 @@ def draw_pieces(board_img, pieces, board_array, nb_squares=8):
     return board_img
 
 
-def transform_fen_pil(fen, board_size=480, nb_squares=8,
-                      light_color=(255, 253, 208), dark_color=(76, 153, 0),
-                      pieces_ext="png", pieces_path=PIECES_DIR):
+def transform_fen_pil(fen, board_size=480, light_color=(255, 253, 208),
+                      dark_color=(76, 153, 0), pieces_ext="png",
+                      pieces_path=PIECES_DIR):
     """Convert a FEN representation to a PIL image.
 
     Args:
@@ -187,7 +185,6 @@ def transform_fen_pil(fen, board_size=480, nb_squares=8,
             "r1b1kb1r/pp2pppp/1qn2n2/3p4/3P1B2/1N3N2/PPP2PPP/R2QKB1R"
         board_size (int): image width and height (in pixels). Should be
             divisible by nb_squares. Defaults to 480.
-        nb_squares (int, optional): nb of squares per side. Defaults to 8.
         light_color (tuple, optional): RGB color for light squares.
             Defaults to (255, 253, 208).
         dark_color (tuple, optional): RGB color for dark squares.
@@ -221,18 +218,12 @@ def transform_fen_pil(fen, board_size=480, nb_squares=8,
 
     board = create_empty_board(
         board_size=board_size,
-        nb_squares=nb_squares,
+        nb_squares=8,
         light_color=light_color,
         dark_color=dark_color
     )
-    pieces = load_pieces_images(pieces_path)
+    pieces = load_pieces_images(
+        pieces_path, extension=pieces_ext)
     board_array = fen_to_array(fen)
     board = draw_pieces(board, pieces, board_array)
     return board
-
-
-if __name__ == "__main__":
-    fen = "r1b1kb1r/pp2pppp/1qn2n2/3p4/3P1B2/1N3N2/PPP2PPP/R2QKB1R"
-
-    img = transform_fen_pil(fen)
-    img.show()

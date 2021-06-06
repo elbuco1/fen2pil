@@ -2,6 +2,3 @@ numpy>=1.19,<2
 opencv-python>=4.5,<5
 chess>=1.4,<2
 Pillow>=8.1.2,<9
-autopep8>=1.5,<2
-setuptools>= 51.0.0,< 52
-wheel>=0.36

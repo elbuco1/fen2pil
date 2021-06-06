@@ -13,13 +13,25 @@ AUTHOR = "Laurent Boucaud"
 REQUIRES_PYTHON = '>=3.7'
 
 
-def list_reqs(fname='requirements.txt'):
-    with open(fname) as fd:
-        return fd.read().splitlines()
+# def list_reqs(fname='requirements.txt'):
+#     with open(fname) as fd:
+#         return fd.read().splitlines()
 
 
-INSTALL_REQUIRES = list_reqs(fname='requirements.txt')
-TEST_REQUIRES = list_reqs(fname='requirements-test.txt')
+# INSTALL_REQUIRES = list_reqs(fname='requirements.txt')
+# TEST_REQUIRES = list_reqs(fname='requirements-test.txt')
+
+INSTALL_REQUIRES = [
+    'numpy>=1',
+    'chess>=1',
+    'opencv-python>=4',
+    'Pillow>=8'
+]
+
+TEST_REQUIRES = [
+    'pytest',
+    'tox'
+]
 
 here = os.path.abspath(os.path.dirname(__file__))
 
@@ -57,13 +69,11 @@ setup(
     extras_require={
         "tests": TEST_REQUIRES
     },
-    include_package_data=False,
+    include_package_data=True,
     classifiers=[
         # Trove classifiers
         # Full list: https://pypi.python.org/pypi?%3Aaction=list_classifiers
-        'License :: OSI Approved :: No License',
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6',
+        'License :: OSI Approved :: MIT License',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',

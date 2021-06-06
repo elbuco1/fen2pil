@@ -1,6 +1,15 @@
-add pieces data x
-unit test (test image shape, pixel colors)
-.tox to test multiple python versions
-github actions (automatic tagging, automatic push to pypi)
+sha256sumadd pieces data x
+unit test (test image shape, pixel colors) x
+.tox to test multiple python versions x
+
+flake8 in tox x
+dist/wheel test x
+test-pypi x
+github actions
+github actions (automatic tagging, automatic push to pypi) <-
 pypi procedure
-sphinx doc
+
+https://kiwidamien.github.io/making-a-python-package-iv-writing-unit-tests.html
+
+python3 setup.py sdist bdist_wheel
+twine upload --repository-url https://test.pypi.org/legacy/ dist/

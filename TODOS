@@ -1,0 +1,6 @@
+add pieces data x
+unit test (test image shape, pixel colors)
+.tox to test multiple python versions
+github actions (automatic tagging, automatic push to pypi)
+pypi procedure
+sphinx doc

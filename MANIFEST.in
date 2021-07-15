@@ -1,0 +1,6 @@
+include requirements.txt
+include requirements-test.txt
+include LICENSE
+include tests *.py
+include images/board_example.png
+include README.md

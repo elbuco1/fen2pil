@@ -1,0 +1,8 @@
+name: fen2pil
+
+channels:
+  - defaults
+
+dependencies:
+  # project utils
+  - python>=3.9,<3.10

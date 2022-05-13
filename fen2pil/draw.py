@@ -142,7 +142,7 @@ def load_pieces_images(dir_path, extension="png"):
     return pieces
 
 
-def draw_pieces(board_img, pieces, board_array, nb_squares=8):
+def draw_pieces(board_img, pieces, board_array, nb_squares=8, perspective=0):
     """Draw pieces on an empty chessboard.
 
     Args:
@@ -152,6 +152,8 @@ def draw_pieces(board_img, pieces, board_array, nb_squares=8):
         board_array (np.ndarray): 2d representation of array and pieces
         nb_squares (int, optional): nb of squares on a side of the chessboard.
             Defaults to 8.
+        perspective (int, optional): Perspective the board is supposed to be rendered in.
+            0 for white, black otherwise.
 
     Raises:
         ValueError: if the board_size is not divisible by nb_squares
@@ -164,10 +166,13 @@ def draw_pieces(board_img, pieces, board_array, nb_squares=8):
     if board_size % nb_squares != 0:
         raise ValueError(
             f"Board size must be divisible by {nb_squares}. Got {board_size}.")
-    square_size = int(board_size/nb_squares)
+    square_size = int(board_size / nb_squares)
     for i in range(len(board_array)):
         for j in range(len(board_array)):
-            piece = board_array[i, j]
+            if perspective == 0:
+                piece = board_array[i, j]
+            else:
+                piece = board_array[nb_squares - i, nb_squares - j]
             if piece != ".":
                 piece_img = pieces[piece]
                 top_left = (j * square_size, i * square_size)

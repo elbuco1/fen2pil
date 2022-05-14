@@ -172,7 +172,7 @@ def draw_pieces(board_img, pieces, board_array, nb_squares=8, perspective=0):
             if perspective == 0:
                 piece = board_array[i, j]
             else:
-                piece = board_array[nb_squares - i, nb_squares - j]
+                piece = board_array[nb_squares - i - 1, nb_squares - j - 1]
             if piece != ".":
                 piece_img = pieces[piece]
                 top_left = (j * square_size, i * square_size)
@@ -182,7 +182,7 @@ def draw_pieces(board_img, pieces, board_array, nb_squares=8, perspective=0):
 
 def transform_fen_pil(fen, board_size=480, light_color=(255, 253, 208),
                       dark_color=(76, 153, 0), pieces_ext="png",
-                      pieces_path=PIECES_DIR):
+                      pieces_path=PIECES_DIR, perspective=0):
     """Convert a FEN representation to a PIL image.
 
     Args:
@@ -216,6 +216,8 @@ def transform_fen_pil(fen, board_size=480, light_color=(255, 253, 208),
                         |_ "r.<extension>"
 
             Defaults to PIECES_DIR.
+        perspective: Whether the board is shown from the black or white player's perspective.  1 is for black, 0 is for
+            white.
 
     Returns:
         PIL.Image: image representation of input fen
@@ -230,5 +232,5 @@ def transform_fen_pil(fen, board_size=480, light_color=(255, 253, 208),
     pieces = load_pieces_images(
         pieces_path, extension=pieces_ext)
     board_array = fen_to_array(fen)
-    board = draw_pieces(board, pieces, board_array)
+    board = draw_pieces(board, pieces, board_array, perspective=perspective)
     return board

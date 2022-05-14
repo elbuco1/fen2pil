@@ -216,8 +216,9 @@ def transform_fen_pil(fen, board_size=480, light_color=(255, 253, 208),
                         |_ "r.<extension>"
 
             Defaults to PIECES_DIR.
-        perspective: Whether the board is shown from the black or white player's perspective.  1 is for black, 0 is for
-            white.
+
+        perspective (int, optional): Perspective the board is supposed to be rendered in.
+            0 for white, black otherwise.
 
     Returns:
         PIL.Image: image representation of input fen

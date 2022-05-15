@@ -59,6 +59,9 @@ jobs:
       - name: Build dist
         run: |
           rm -rf dist
+          CURRENT_VERSION=$(python setup.py --version)
+          SNAPSHOT_VERSION=$CURRENT_VERSION-snapshot-$GITHUB_SHA
+          echo $SNAPSHOT_VERSION > fen2pil/VERSION
           python3 setup.py sdist bdist_wheel
           twine check dist/*
       - name: Publish package to PyPI Test

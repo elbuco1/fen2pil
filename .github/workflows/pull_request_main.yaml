@@ -60,9 +60,8 @@ jobs:
         run: |
           rm -rf dist
           CURRENT_VERSION=$(python setup.py --version)
-          SNAPSHOT_VERSION=${CURRENT_VERSION}65f16er4g6erg5
+          SNAPSHOT_VERSION=$CURRENT_VERSION-dev${GITHUB_RUN_ID}
           echo -n $SNAPSHOT_VERSION > fen2pil/VERSION
-          echo ${SNAPSHOT_VERSION}_test
           python3 setup.py sdist bdist_wheel
           twine check dist/*
       - name: Publish package to PyPI Test

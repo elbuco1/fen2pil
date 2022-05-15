@@ -39,6 +39,7 @@ jobs:
 
       - name: Test version increase
         run: |
+          git fetch origin
           FORMER_VERSION=$(git show origin/main:fen2pil/VERSION) || FORMER_VERSION=0.0.0
           CURRENT_VERSION=$(python setup.py --version)
           python check_version_increase.py  version_increased --former_version $FORMER_VERSION --current_version $CURRENT_VERSION

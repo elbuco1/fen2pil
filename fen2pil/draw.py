@@ -180,7 +180,8 @@ def draw_pieces(board_img, pieces, board_array, nb_squares=8, perspective=0):
     return board_img
 
 
-def transform_fen_pil(fen=None, board_array=None, board_size=480, light_color=(255, 253, 208),
+def transform_fen_pil(fen=None, board_array=None, board_size=480, 
+                      light_color=(255, 253, 208),
                       dark_color=(76, 153, 0), pieces_ext="png",
                       pieces_path=PIECES_DIR, perspective=0):
     """Convert a FEN representation to a PIL image.
@@ -237,7 +238,6 @@ def transform_fen_pil(fen=None, board_array=None, board_size=480, light_color=(2
     )
     pieces = load_pieces_images(
         pieces_path, extension=pieces_ext)
-    
 
     if fen is not None:
         board_array = fen_to_array(fen)

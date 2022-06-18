@@ -180,7 +180,7 @@ def draw_pieces(board_img, pieces, board_array, nb_squares=8, perspective=0):
     return board_img
 
 
-def transform_fen_pil(fen, board_size=480, light_color=(255, 253, 208),
+def transform_fen_pil(fen=None, board_array=None, board_size=480, light_color=(255, 253, 208),
                       dark_color=(76, 153, 0), pieces_ext="png",
                       pieces_path=PIECES_DIR, perspective=0):
     """Convert a FEN representation to a PIL image.
@@ -188,6 +188,9 @@ def transform_fen_pil(fen, board_size=480, light_color=(255, 253, 208),
     Args:
         fen (str): Forsyth–Edwards Notation of chessboard position i.e:
             "r1b1kb1r/pp2pppp/1qn2n2/3p4/3P1B2/1N3N2/PPP2PPP/R2QKB1R"
+            If None, board_array should be passed. Defaults to None.
+        board_array (np.array): Board representation as produced by fen_to_array.
+                          If None, fen should be passed. Defaults to None.
         board_size (int): image width and height (in pixels). Should be
             divisible by nb_squares. Defaults to 480.
         light_color (tuple, optional): RGB color for light squares.
@@ -223,6 +226,8 @@ def transform_fen_pil(fen, board_size=480, light_color=(255, 253, 208),
     Returns:
         PIL.Image: image representation of input fen
     """
+    if not board_array and not fen:
+        raise ValueError("board and fen can't both be None.")
 
     board = create_empty_board(
         board_size=board_size,
@@ -232,6 +237,9 @@ def transform_fen_pil(fen, board_size=480, light_color=(255, 253, 208),
     )
     pieces = load_pieces_images(
         pieces_path, extension=pieces_ext)
-    board_array = fen_to_array(fen)
+    
+
+    if fen is not None:
+        board_array = fen_to_array(fen)
     board = draw_pieces(board, pieces, board_array, perspective=perspective)
     return board

@@ -227,7 +227,7 @@ def transform_fen_pil(fen=None, board_array=None, board_size=480,
     Returns:
         PIL.Image: image representation of input fen
     """
-    if not board_array and not fen:
+    if board_array is None and fen is None:
         raise ValueError("board and fen can't both be None.")
 
     board = create_empty_board(

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
+import PIL
 from PIL import Image
 import numpy as np
 import os
@@ -87,7 +87,8 @@ def create_empty_board(board_size=480, nb_squares=8,
     return board
 
 
-def load_pieces_images(dir_path, extension="png"):
+def load_pieces_images(dir_path, nb_squares=8,
+                        board_size=480, extension="png"):
     """Load all chess pieces images in a dict.
     The pieces names are:
     ["B", "K", "N", "P", "Q", "R"] for
@@ -117,6 +118,9 @@ def load_pieces_images(dir_path, extension="png"):
 
     Args:
         dir_path (str): directory where pieces images are saved
+        nb_squares (int, optional): nb of squares on a side of the chessboard.
+            Defaults to 8.
+        board_array (np.ndarray): 2d representation of array and pieces
         extension (str, optional): image files extensions. Defaults to "png".
 
     Returns:
@@ -126,6 +130,8 @@ def load_pieces_images(dir_path, extension="png"):
     black_pieces = [name.lower() for name in white_pieces]
 
     pieces_names = white_pieces + black_pieces
+
+    square_size = int(board_size/nb_squares)
 
     pieces = {}
     for piece in pieces_names:
@@ -137,7 +143,9 @@ def load_pieces_images(dir_path, extension="png"):
             f"{piece.lower()}.{extension}"
         )
         piece_img = Image.open(piece_file_path)
-        piece_img = piece_img.convert('RGBA')
+        piece_img = piece_img.convert('RGBA') \
+                             .resize((square_size, square_size))
+
         pieces[piece] = piece_img
     return pieces
 
@@ -163,6 +171,7 @@ def draw_pieces(board_img, pieces, board_array, nb_squares=8, perspective=0):
             board_array
     """
     board_size = board_img.size[0]
+
     if board_size % nb_squares != 0:
         raise ValueError(
             f"Board size must be divisible by {nb_squares}. Got {board_size}.")
@@ -237,9 +246,22 @@ def transform_fen_pil(fen=None, board_array=None, board_size=480,
         dark_color=dark_color
     )
     pieces = load_pieces_images(
-        pieces_path, extension=pieces_ext)
+        pieces_path, nb_squares=8, board_size=board_size,
+        extension=pieces_ext)
 
     if fen is not None:
         board_array = fen_to_array(fen)
     board = draw_pieces(board, pieces, board_array, perspective=perspective)
     return board
+
+
+if __name__ == "__main__":
+    fen = "r1b1kb1r/pp2pppp/1qn2n2/3p4/3P1B2/1N3N2/PPP2PPP/R2QKB1R"
+    board = transform_fen_pil(fen=fen, board_array=None, board_size=224,
+                      light_color=(255, 253, 208),
+                      dark_color=(76, 153, 0), pieces_ext="png",
+                      pieces_path=PIECES_DIR, perspective=0)
+
+    import matplotlib.pyplot as plt
+    plt.imshow(board)
+    plt.show()

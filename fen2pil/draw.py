@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import PIL
 from PIL import Image
 import numpy as np
 import os
@@ -87,8 +86,7 @@ def create_empty_board(board_size=480, nb_squares=8,
     return board
 
 
-def load_pieces_images(dir_path, nb_squares=8,
-                        board_size=480, extension="png"):
+def load_pieces_images(dir_path, nb_squares=8, board_size=480, extension="png"):
     """Load all chess pieces images in a dict.
     The pieces names are:
     ["B", "K", "N", "P", "Q", "R"] for
@@ -258,9 +256,9 @@ def transform_fen_pil(fen=None, board_array=None, board_size=480,
 if __name__ == "__main__":
     fen = "r1b1kb1r/pp2pppp/1qn2n2/3p4/3P1B2/1N3N2/PPP2PPP/R2QKB1R"
     board = transform_fen_pil(fen=fen, board_array=None, board_size=224,
-                      light_color=(255, 253, 208),
-                      dark_color=(76, 153, 0), pieces_ext="png",
-                      pieces_path=PIECES_DIR, perspective=0)
+                              light_color=(255, 253, 208),
+                              dark_color=(76, 153, 0), pieces_ext="png",
+                              pieces_path=PIECES_DIR, perspective=0)
 
     import matplotlib.pyplot as plt
     plt.imshow(board)
